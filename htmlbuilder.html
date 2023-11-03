@@ -62,7 +62,6 @@ function HtmlBuilder(elements) {
             html.push(element);
             return;
         }
-        console.log(element)
         let htmlAttrs = {};
         let styleAttrs = {};
         let tag = "";
@@ -71,7 +70,6 @@ function HtmlBuilder(elements) {
         let firstKey = true;
         for( let key in element ) {
             let keyVal = element[key];
-            console.log(keyVal)
             if( keyVal === "undefined" ){
                 console.log(element);
             }
@@ -116,6 +114,8 @@ function HtmlBuilder(elements) {
                             case "tr":  // tr key can have optional data-id value, typically db record id
                                 if( !(keyVal === "" || keyVal === null) ){
                                     line = `<tr data-id='${keyVal}'`;
+                                } else {
+                                    line = "<tr";
                                 }
                                 break;
                             case "end":
@@ -195,8 +195,9 @@ function addClassIdNameAttr(keyVal) {
 // -- DEMO USE OF HTML BUILDER FOLLOWS ----------------------------------------------------------------------
 
 let recs = [
-    { id:"101", good:"a triumph for every one", bad:"beware of Albert"},
-    { id:"102", good:"", bad:"beware of Albert"},
+    {id:"101", name:"Lone Ranger", descr:"Masked Cowboy Hero"},
+    {id:"102", name:"Howdy Doody", descr:"Puppet Star"},
+    {id:"103", name:"Roy Rogers", descr:"Singin Cowboy"}
 ]
 let sectionHeadingColor = "red"; 
 
@@ -213,26 +214,36 @@ let elements = [
         {li:"item1"},
         {li:"item2"},
     {end:"ul"},
-    {table:"#tbl1", b:"1px solid red", mbottom:"20px"}, 
-        {tr:recs[0].id},
-            {td:recs[0].good, name:"col1"}, "</td>",
-            {td:recs[0].bad, name:"col1"}, "</td>",
-        {end:"tr"},    
+    {table:"#tbl1", b:"1px solid red", mbottom:"20px"},
+        {tr:null},
+            {th:"Name"}, {th:"Description"},
+        {end:"tr"},
+        "<tbody id='tbl1_body'></tbody>",    // rows added by code below  
     {end:"table"},  
     {radio:"*rad_color", id:"rad_red", value:"red"}, {label:"Red", for:"rad_red"},
     {radio:"*rad_color", id:"rad_blue", value:"blue"}, {label:"Blue", for:"rad_blue"},
     "<p>html exactly as entered</p>",
     "<hr>",
-    {checkbox:"#cbx_choic1", value:"choice1"}, {label:"I Agree", for:"cbx_choice1"},
-    {checkbox:"#cbx_choic2", value:"choice2"}, {label:"I Disagree", for:"cbx_choice2"},
+    {checkbox:"#cbx_choice1", value:"choice1"}, {label:"I Agree", for:"cbx_choice1"},
+    {checkbox:"#cbx_choice2", value:"choice2"}, {label:"I Disagree", for:"cbx_choice2"},
     "<br>",
-    {button:"I'm Done", id:"btn_done", p:"7px 25px", bkgclr:"lime", m:"20px"},
+    {button:"I'm Done", id:"btn_done", p:"7px 25px", bkgclr:"#959fdc", m:"20px"},
     {end:"div"}
 ]
 let html = HtmlBuilder(elements)
-
 console.log(html)
-
 document.getElementById("main_div").innerHTML = html;
+
+// add rows to table using recs array
+elements = [];
+recs.forEach( (rec) => {
+    elements.push({tr:rec.id});
+    elements.push({td:rec.name});
+    elements.push({td:rec.descr});
+    elements.push({end:"tr"});
+})
+html = HtmlBuilder(elements);
+console.log(html)
+document.getElementById("tbl1_body").innerHTML = html;
 
 </script>	

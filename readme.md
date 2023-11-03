@@ -9,7 +9,7 @@ Open this file in a browser to see results.
 
 ### Features  
 * uses js objects to create html
-* html code can easily use variables
+* makes it easy to incorporate variables
 * shortcuts to minimize coding
 * simplifies generating html with javascript  
 
@@ -23,7 +23,7 @@ An array of objects is passed to the HtmlBuilder function. The first key of each
 ``` 
 ### Outputs  
 ```
-1 - <div id="div1" style="border 1px solid green; padding:5px;">
+1 - <div id="div1" style="border:1px solid green; padding:5px;">
 2 - <h2 style="color:red">Section Heading</h2>
 3 - <img src="img-file-path" style="width:500px;height:300px;">
 ```
